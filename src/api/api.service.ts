@@ -93,9 +93,12 @@ export class ApiService {
           id: data[randomIndex].id,
           name: data[randomIndex].name,
           team: data[randomIndex].team,
+          payment_method: data[randomIndex].payment_method.id,
           account_number: data[randomIndex].account_number,
           logo: data[randomIndex].payment_method.logo,
           bank_name: data[randomIndex].payment_method.name,
+          min_transfer_amount: data[randomIndex].min_limit,
+          max_transfer_amount: data[randomIndex].max_limit,
         };
       }
       return false;
@@ -123,6 +126,8 @@ export class ApiService {
           account_number: data[randomIndex].account_number,
           logo: data[randomIndex].payment_method.logo,
           bank_name: data[randomIndex].payment_method.name,
+          min_transfer_amount: data[randomIndex].min_limit,
+          max_transfer_amount: data[randomIndex].max_limit,
         };
       }
       return false;
@@ -188,7 +193,9 @@ export class ApiService {
           bank_name: bankAccount.bank_name,
           name: bankAccount.name,
           account_number: bankAccount.account_number,
-          logo: bankAccount.logo,
+          min_transfer_amount: bankAccount.min_limit,
+          max_transfer_amount: bankAccount.max_limit,
+          status: 'active',
         },
       ],
     };
