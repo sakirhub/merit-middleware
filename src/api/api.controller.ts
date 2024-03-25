@@ -5,7 +5,7 @@ import { CreateDepositDto } from './dto/create-deposit.dto';
 @Controller('api')
 export class ApiController {
   constructor(private readonly apiService: ApiService) {}
-  @Get('bank-trasfer/methods')
+  @Post('bank-trasfer/methods')
   getBankTransferMethods() {
     return this.apiService.getBankTransferMethods();
   }
