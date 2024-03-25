@@ -19,7 +19,19 @@ export class ApiService {
         .eq('status', 'active')
         .neq('id', 'aad2e73d-0a8a-4de4-9841-980567cbf34f')
         .neq('id', '279fbfdb-34c8-41e5-9d9b-54137ad20f8b');
-    return bankTransferMethods;
+    const returnData = bankTransferMethods.map((method) => {
+      return {
+        _id: method.id,
+        name: method.name,
+        logo: method.logo,
+        status: method.status,
+      };
+    });
+    if (bankTransferMethodsError) {
+      console.error('Bir hata oluştu:', bankTransferMethodsError);
+      return;
+    }
+    return returnData;
   }
   async checkInvestor(investor: any): Promise<any> {
     const client: any = this.supabaseService.client() as any;
