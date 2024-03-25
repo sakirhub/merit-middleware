@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { SupabaseModule } from './supabase/supabase.module';
 import { ApiModule } from './api/api.module';
+import { SupabaseService } from './supabase/supabase.service';
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { ApiModule } from './api/api.module';
     ApiModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SupabaseService],
 })
 export class AppModule {}

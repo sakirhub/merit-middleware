@@ -21,8 +21,6 @@ export class SupabaseService {
     this.supabase = createClient(supabaseUrl, supabaseKey);
   }
   async getClient() {
-
-
     this.clientInstance = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_KEY,
