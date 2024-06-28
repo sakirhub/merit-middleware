@@ -280,7 +280,7 @@ export class ApiService {
       bank_accounts: [
         {
           id: 'e0468efe-cd4a-44bc-a0c2-9f3150863148',
-          bank_name: 'FAST',
+          bank_name: 'FAST2',
           name: depositResponse.name,
           account_number: depositResponse.account_number,
           min_transfer_amount: 50,
