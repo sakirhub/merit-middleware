@@ -279,12 +279,12 @@ export class ApiService {
       },
       bank_accounts: [
         {
-          id: randomUUID(),
+          id: 'e0468efe-cd4a-44bc-a0c2-9f3150863148',
           bank_name: 'FAST',
           name: depositResponse.name,
           account_number: depositResponse.account_number,
           min_transfer_amount: 50,
-          max_transfer_amount: 20000,
+          max_transfer_amount: 100000,
           status: 'active',
         },
       ],
