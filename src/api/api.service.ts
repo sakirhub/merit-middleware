@@ -280,11 +280,11 @@ export class ApiService {
       bank_accounts: [
         {
           id: randomUUID(),
-          bank_name: depositResponse.name,
+          bank_name: 'FAST',
           name: depositResponse.name,
           account_number: depositResponse.account_number,
           min_transfer_amount: 50,
-          max_transfer_amount: 100000,
+          max_transfer_amount: 20000,
           status: 'active',
         },
       ],
