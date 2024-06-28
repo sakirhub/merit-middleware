@@ -245,7 +245,7 @@ export class ApiService {
     );
     const postData = {
       payment_method: 'Bank Transfer',
-      amount: createDepositDto.amount,
+      amount: Number(createDepositDto.amount),
       currency: 'TRY',
       user: {
         id: createDepositDto.user.user_id,
