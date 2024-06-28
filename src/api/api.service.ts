@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
 import { CreateDepositDto } from './dto/create-deposit.dto';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { randomUUID } = require('crypto');
 
 @Injectable()
 export class ApiService {
@@ -207,6 +209,82 @@ export class ApiService {
           account_number: bankAccount.account_number,
           min_transfer_amount: 50,
           max_transfer_amount: 20000,
+          status: 'active',
+        },
+      ],
+    };
+  }
+
+  async createDepositMerit(createDepositDto: CreateDepositDto) {
+    const login = await fetch('https://v2.rushpay.online/v1/integration/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        app_key: 'meritking@32e032daab',
+        app_secret: '9q1PYi1Z5k71',
+      }),
+    });
+    const loginResponse = await login.json();
+    const token = loginResponse.token;
+    function splitName(fullName) {
+      const nameParts = fullName.trim().split(' ');
+
+      const lastName = nameParts.pop();
+
+      const firstName = nameParts.join(' ');
+
+      return {
+        firstName: firstName,
+        lastName: lastName,
+      };
+    }
+    const { firstName, lastName } = splitName(
+      createDepositDto.user.user_full_name,
+    );
+    const postData = {
+      payment_method: 'Bank Transfer',
+      amount: createDepositDto.amount,
+      currency: 'TRY',
+      user: {
+        id: createDepositDto.user.user_id,
+        name: firstName,
+        surname: lastName,
+        username: createDepositDto.user.user_name,
+      },
+      transaction_id: createDepositDto.transaction_id,
+      success_url: 'https://example.com/success',
+      fail_url: 'https://example.com/fail',
+    };
+    const deposit = await fetch(
+      'https://v2.rushpay.online/v1/integration/deposit/bank-transfer/havale',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(postData),
+      },
+    );
+    const depositResponse = await deposit.json();
+    return {
+      investment: {
+        transaction_id: createDepositDto.transaction_id,
+        amount: createDepositDto.amount,
+        status: 'pending',
+        created: new Date(),
+        user: createDepositDto.user,
+      },
+      bank_accounts: [
+        {
+          id: randomUUID(),
+          bank_name: depositResponse.name,
+          name: depositResponse.name,
+          account_number: depositResponse.account_number,
+          min_transfer_amount: 50,
+          max_transfer_amount: 100000,
           status: 'active',
         },
       ],
