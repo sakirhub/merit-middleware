@@ -11,7 +11,7 @@ export class ApiController {
   }
   @Post('deposit')
   deposit(@Body() createDepositDto: CreateDepositDto) {
-    return this.apiService.deposit(createDepositDto);
+    return this.apiService.createDepositMerit(createDepositDto);
   }
   @Post('deposit/verify')
   verifyDeposit(@Body() body: any) {
